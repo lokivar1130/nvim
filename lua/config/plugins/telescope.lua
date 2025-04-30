@@ -22,7 +22,7 @@ return {
 			require("telescope").load_extension("ui-select")
 			vim.keymap.set(
 				"n",
-				"<leader>f",
+				"<leader>fz",
 				":Telescope current_buffer_fuzzy_find<CR>",
 				{ noremap = true, silent = true, desc = "Fuzzy search in current buffer" }
 			)
