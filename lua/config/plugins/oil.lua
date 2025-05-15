@@ -10,22 +10,19 @@ return {
 		-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 		lazy = false,
 		config = function()
-			local detail = false
 			require("oil").setup({
-				keymaps = {
-					["<leader>ft"] = {
-						desc = "Toggle file detail view",
-						callback = function()
-							detail = not detail
-							if detail then
-								require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
-							else
-								require("oil").set_columns({ "icon" })
-							end
-						end,
-					},
+				view_options = {
+					show_hidden = true,
 				},
 			})
+			local actions = require("oil.actions")
+			vim.keymap.set("n", "<Tab>", function()
+				if vim.bo.filetype == "oil" then
+					actions.close.callback()
+				else
+					vim.cmd("Oil")
+				end
+			end)
 		end,
 	},
 }
