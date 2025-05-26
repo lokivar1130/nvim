@@ -46,6 +46,13 @@ return {
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { noremap = true, silent = true })
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
       })
       lspconfig.gopls.setup({
         capabilities = capabilities,
@@ -153,14 +160,39 @@ return {
       lspconfig.terraformls.setup({
         capabilities = capabilities,
       })
-      vim.keymap.set("n", "<leader>sh", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gD", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>fr", vim.lsp.buf.references, {}) -- Find references
-      vim.keymap.set("n", "<leader>fh", vim.lsp.buf.signature_help, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.declaration, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>gb", "<C-o>", { desc = "Go back to previous location" })
-      vim.keymap.set("n", "<leader>gf", "<C-I>", { desc = "Go back to next location" })
+      -- LSP prefixed group
+      local function with_desc(desc)
+        return vim.tbl_extend("force", { noremap = true, silent = true }, { desc = desc })
+      end
+
+      -- Hover & Signature Help
+      vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, with_desc("Hover Documentation"))
+      vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, with_desc("Signature Help"))
+
+      -- Navigation
+      vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, with_desc("Go to Definition"))
+      vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, with_desc("Go to Declaration"))
+      vim.keymap.set("n", "<leader>li", vim.lsp.buf.implementation, with_desc("Go to Implementation"))
+      vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, with_desc("Find References"))
+
+      -- Code Actions & Rename
+      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, with_desc("Code Action"))
+      vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename, with_desc("Rename Symbol"))
+
+      -- Formatting
+      vim.keymap.set("n", "<leader>lf", function()
+        vim.lsp.buf.format({ async = true })
+      end, with_desc("Format File"))
+
+      -- Diagnostics
+      vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, with_desc("Show Line Diagnostics"))
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, with_desc("Previous Diagnostic"))
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, with_desc("Next Diagnostic"))
+      vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist, with_desc("Diagnostics to LocList"))
+
+      -- Symbols
+      vim.keymap.set("n", "<leader>lds", vim.lsp.buf.document_symbol, with_desc("Document Symbols"))
+      vim.keymap.set("n", "<leader>lws", vim.lsp.buf.workspace_symbol, with_desc("Workspace Symbols"))
     end,
   },
 }
