@@ -6,24 +6,30 @@ vim.opt.swapfile = false
 vim.g.mapleader = " "
 vim.o.signcolumn = "yes"
 vim.o.winborder = "rounded"
-
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
-vim.cmd("set completeopt+=noselect")
-vim.cmd("set completeopt+=menuone")
-vim.cmd("set completeopt+=noselect")
 
+vim.diagnostic.config({
+	-- Use the default configuration
+	virtual_lines = true
+	-- Alternatively, customize specific options
+	-- virtual_lines = {
+	--  -- Only show virtual line diagnostics for the current cursor line
+	--  current_line = true,
+	-- },
+})
 
 
 
 -- plugins
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
+	{ src = "https://github.com/navarasu/onedark.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' },
+	--	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/folke/which-key.nvim" },
 
 })
 
@@ -33,14 +39,20 @@ vim.pack.add({
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(ev)
 		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-		if client:supports_method("textDocument/completion") then
-			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
+			vim.opt.completeopt = { 'menuone', 'noselect', 'popup' }
+			vim.lsp.completion.enable(true, client.id, ev.buf, {
+				autotrigger = true,
+				convert = function(item)
+					return { abbr = item.label:gsub("%b()", "") }
+				end
+
+			})
+			-- 🚀 Completion
+			vim.keymap.set('i', '<C-Space>',
+				vim.lsp.completion.get, { desc = "Trigger Autocompletion" })
 		end
 		local opts = { buffer = ev.buf, noremap = true, silent = true }
-
-		-- 🚀 Completion
-		vim.keymap.set("i", "<leader>lc", "<C-x><C-o>",
-			vim.tbl_extend("force", opts, { desc = "LSP completion" }))
 
 		-- 📖 Hover docs
 		vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover,
@@ -93,12 +105,22 @@ vim.lsp.config("solidity_ls_nomicfoundation",
 		cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
 		filetypes = { "solidity" },
 		root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml", "remappings.txt", "truffle.js", "truffle-config.js", "ape-config.yaml", ".git", "package.json" },
-		single_file_support = true
 	})
 
 
+--rust
+vim.lsp.config('rust_analyzer', {
+	settings = {
+		['rust-analyzer'] = {
+			diagnostics = {
+				enable = false,
+			}
+		}
+	}
+})
+
 --lsp enablement
-vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation" })
+vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
 
 
 --plugins config
@@ -111,9 +133,10 @@ vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 --oil
 require "oil".setup()
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
-
-vim.cmd("colorscheme vague")
+require('onedark').setup {
+	style = 'darker'
+}
+vim.cmd("colorscheme onedark")
 vim.cmd(":hi statusline guibg=NONE")
-
---treesitter
-
+--mason
+require "mason".setup()
