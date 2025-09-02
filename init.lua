@@ -1,7 +1,7 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wrap = false
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 vim.opt.swapfile = false
 vim.g.mapleader = " "
 vim.o.signcolumn = "yes"
@@ -41,6 +41,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 		if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
 			vim.opt.completeopt = { 'menuone', 'noselect', 'popup' }
+			local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+			client.server_capabilities.completionProvider.triggerCharacters = chars
 			vim.lsp.completion.enable(true, client.id, ev.buf, {
 				autotrigger = true,
 				convert = function(item)
@@ -100,12 +102,11 @@ vim.lsp.config("lua_ls",
 	})
 
 --solidity
-vim.lsp.config("solidity_ls_nomicfoundation",
-	{
-		cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-		filetypes = { "solidity" },
-		root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml", "remappings.txt", "truffle.js", "truffle-config.js", "ape-config.yaml", ".git", "package.json" },
-	})
+vim.lsp.config("solidity_ls_nomicfoundation", {
+	cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+	filetypes = { "solidity" },
+	root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml", "remappings.txt", "truffle.js", "truffle-config.js", "ape-config.yaml", ".git", "package.json" },
+})
 
 
 --rust
@@ -134,7 +135,7 @@ vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
 require "oil".setup()
 vim.keymap.set('n', '<leader>e', ":Oil<CR>")
 require('onedark').setup {
-	style = 'darker'
+	style = 'deep'
 }
 vim.cmd("colorscheme onedark")
 vim.cmd(":hi statusline guibg=NONE")
