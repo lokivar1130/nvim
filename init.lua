@@ -30,6 +30,7 @@ vim.pack.add({
 	--	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/folke/which-key.nvim" },
+	{ src = "https://github.com/CRAG666/betterTerm.nvim" }
 
 })
 
@@ -58,6 +59,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		-- 📖 Hover docs
 		vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover,
+			vim.tbl_extend("force", opts, { desc = "Hover docs" }))
+		-- 📖 Code Actions 
+		vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action,
 			vim.tbl_extend("force", opts, { desc = "Hover docs" }))
 
 		-- 📍 Go to definition
@@ -141,3 +145,34 @@ vim.cmd("colorscheme onedark")
 vim.cmd(":hi statusline guibg=NONE")
 --mason
 require "mason".setup()
+--better terrm
+require("betterTerm").setup({
+
+				size = math.floor(vim.o.columns / 6 )
+})
+local betterTerm = require('betterTerm')
+
+-- Toggle the first terminal (ID defaults to index_base, which is 0)
+vim.keymap.set({"n", "t"}, "<C-;>", function() betterTerm.open() end, { desc = "Toggle terminal" })
+
+-- Open a specific terminal
+vim.keymap.set({"n", "t"}, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
+
+-- Select a terminal to focus
+vim.keymap.set("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
+
+-- Rename the current terminal
+vim.keymap.set("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
+
+-- Toggle the tabs bar
+vim.keymap.set("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
+
+--lsp helper keybinds 
+vim.keymap.set("i", "<Tab>", function()
+  if vim.fn.pumvisible() == 1 then
+    return vim.lsp.completion.confirm()
+  else
+    return "\t"
+  end
+end, { expr = true })
+
