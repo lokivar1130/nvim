@@ -1,23 +1,5 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.wrap = false
-vim.opt.tabstop = 2
-vim.opt.swapfile = false
-vim.g.mapleader = " "
-vim.o.signcolumn = "yes"
-vim.o.winborder = "rounded"
--- Consistent indentation
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-
--- Better search
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- Faster UI feedback
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
+require("config.options")
+require("config.mappings")
 
 vim.diagnostic.config({
   virtual_lines = false, -- less noisy
@@ -162,7 +144,6 @@ require("betterTerm").setup({
 
   size = math.floor(vim.o.columns / 6)
 })
-local betterTerm = require('betterTerm')
 
 -- noice
 require("noice").setup({
@@ -182,23 +163,3 @@ require("noice").setup({
   }
 })
 
--- Toggle the first terminal (ID defaults to index_base, which is 0)
-vim.keymap.set({ "n", "t" }, "<C-;>", function() betterTerm.open() end, { desc = "Toggle terminal" })
-
--- Open a specific terminal
-vim.keymap.set({ "n", "t" }, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
-
--- Select a terminal to focus
-vim.keymap.set("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
-
--- Rename the current terminal
-vim.keymap.set("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
-
--- Toggle the tabs bar
-vim.keymap.set("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
-
---lsp helper keybinds
--- Confirm completion with <Tab>
-vim.keymap.set("i", "<Tab>", function()
-  return vim.fn.pumvisible() == 1 and "<C-y>" or "<Tab>"
-end, { expr = true, noremap = true })
