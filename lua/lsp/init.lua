@@ -2,12 +2,13 @@ vim.diagnostic.config({
   virtual_lines = false, -- less noisy
   virtual_text = { spacing = 2, prefix = "●" },
   float = { border = "rounded" },
+  signs = true
 })
 
 --lsp autocomple
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
---mason
+    local opts = { buffer = ev.buf, noremap = true, silent = true }
     local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
       vim.opt.completeopt = { 'menuone', 'noselect', 'popup' }
@@ -24,15 +25,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('i', '<C-Space>',
         vim.lsp.completion.get, { desc = "Trigger Autocompletion" })
     end
-    local opts = { buffer = ev.buf, noremap = true, silent = true }
 
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
+      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
+    end
     -- 📖 Hover docs
     vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover,
       vim.tbl_extend("force", opts, { desc = "Hover docs" }))
-    -- 📖 Code Actions
-    vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action,
-      vim.tbl_extend("force", opts, { desc = "Hover docs" }))
-
     -- 📍 Go to definition
     vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition,
       vim.tbl_extend("force", opts, { desc = "Go to definition" }))
@@ -64,4 +63,3 @@ require("lsp.lua")
 require("lsp.rust")
 require("lsp.solidity")
 vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
-

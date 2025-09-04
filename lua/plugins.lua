@@ -1,5 +1,7 @@
 vim.pack.add({
   { src = "https://github.com/navarasu/onedark.nvim" },
+  { src = "https://github.com/akinsho/toggleterm.nvim" },
+  { src = "https://github.com/saghen/blink.cmp" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/MunifTanjim/nui.nvim" },
@@ -17,3 +19,5 @@ require("config.noice")
 require("config.mason")
 require("config.onedark")
 require("config.telescope")
+require("config.blink")
+require("config.toggleterm")
