@@ -1,5 +1,4 @@
-vim.lsp.config("lua_ls",
-  {
+vim.lsp.lua_ls = {
     settings = {
       Lua = {
         workspace = {
@@ -7,4 +6,4 @@ vim.lsp.config("lua_ls",
         }
       }
     }
-  })
+  }

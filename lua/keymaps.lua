@@ -17,3 +17,4 @@ end, { desc = "Update + source only in nvim config" })
 vim.keymap.set("i", "<CR>", function()
   return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"
 end, { expr = true, noremap = true })
+

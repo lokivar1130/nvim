@@ -5,6 +5,7 @@ vim.diagnostic.config({
   signs = true
 })
 
+
 --lsp autocomple
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
