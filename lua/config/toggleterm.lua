@@ -1,6 +1,6 @@
 require("toggleterm").setup({
   size = 20,                -- height of the floating terminal
-  open_mapping = [[<leader>t]],  -- key to toggle the terminal
+  open_mapping = [[<leader>\]],  -- key to toggle the terminal
   hide_numbers = true,      -- hide line numbers in terminal
   shade_filetypes = {},
   shade_terminals = true,
@@ -11,8 +11,8 @@ require("toggleterm").setup({
   direction = "float",      -- floating terminal
   float_opts = {
     border = "rounded",     -- rounded border
-    width = 80,
-    height = 20,
+    width = 160,
+    height = 40,
     winblend = 10,
   },
 })

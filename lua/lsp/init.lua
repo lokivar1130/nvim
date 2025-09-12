@@ -22,6 +22,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
       vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
     end
+
     -- 📖 Hover docs
     vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover,
       vim.tbl_extend("force", opts, { desc = "Hover docs" }))
@@ -52,7 +53,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require("lsp.lua")
+require("lsp.lua-ls")
 require("lsp.rust")
 require("lsp.solidity")
 vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })

@@ -16,3 +16,6 @@ vim.opt.smartcase = true
 -- Faster UI feedback
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
+
+-- Use System Clipboard
+vim.opt.clipboard = "unnamedplus"
