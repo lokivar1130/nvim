@@ -29,6 +29,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
     end
 
+    if vim.lsp.inlay_hint then
+      vim.lsp.inlay_hint.enable(true, { 0 })
+    end
     -- 📖 Hover docs
     vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover,
       vim.tbl_extend("force", opts, { desc = "Hover docs" }))
@@ -58,4 +61,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.tbl_extend("force", opts, { desc = "All diagnostics (quickfix)" }))
   end,
 })
-
