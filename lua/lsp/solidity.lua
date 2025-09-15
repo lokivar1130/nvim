@@ -13,4 +13,4 @@ vim.lsp.config("solidity_ls_nomicfoundation", {
       remappings = Utils.get_foundry_remappings(),
     },
   }
-}
+})

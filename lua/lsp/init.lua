@@ -1,3 +1,9 @@
+require("lsp.lua-ls")
+require("lsp.rust")
+require("lsp.solidity")
+
+vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
+
 vim.diagnostic.config({
   virtual_lines = false, -- less noisy
   virtual_text = { spacing = 2, prefix = "●" },
@@ -53,7 +59,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require("lsp.lua-ls")
-require("lsp.rust")
-require("lsp.solidity")
-vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
