@@ -19,3 +19,4 @@ vim.opt.timeoutlen = 300
 
 -- Use System Clipboard
 vim.opt.clipboard = "unnamedplus"
+

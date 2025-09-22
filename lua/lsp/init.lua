@@ -5,11 +5,13 @@ require("lsp.solidity")
 vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
 
 vim.diagnostic.config({
+
   virtual_lines = false, -- less noisy
   virtual_text = { spacing = 2, prefix = "●" },
   float = { border = "rounded" },
-  signs = true
+  signs = true,
 })
+
 
 
 --lsp autocomple
