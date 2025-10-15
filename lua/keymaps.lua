@@ -9,3 +9,7 @@ end, { expr = true, noremap = true })
 vim.keymap.set("n", "<leader>nh", function()
   vim.cmd("nohlsearch")
 end)
+
+vim.keymap.set("n", "<leader>cn", function()
+  require("notify").dismiss({ silent = true, pending = true })
+end, { desc = "Clear all notifications" })

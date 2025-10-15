@@ -2,7 +2,7 @@ require("lsp.lua-ls")
 require("lsp.rust")
 require("lsp.solidity")
 
-vim.lsp.enable({ "lua_ls", "solidity_ls_nomicfoundation", "rust_analyzer" })
+vim.lsp.enable({ "lua_ls", "solidity_ls", "rust_analyzer" })
 
 vim.diagnostic.config({
 
@@ -26,7 +26,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.lsp.completion.get()
       end)
     end
-
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction) then
       vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
     end

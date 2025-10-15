@@ -12,8 +12,10 @@ vim.pack.add({
   { src = "https://github.com/chomosuke/typst-preview.nvim" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/folke/which-key.nvim" },
+  { src = "https://github.com/rcarriga/nvim-notify" },
 
 })
+require("config.notify")
 require("config.oil")
 require("config.noice")
 require("config.mason")

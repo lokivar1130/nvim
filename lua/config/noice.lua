@@ -11,5 +11,5 @@ require("noice").setup({
       inc_rename = true,
       lsp_doc_border = true,
     },
-  }
+  },
 })
