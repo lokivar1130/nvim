@@ -1,7 +1,7 @@
 vim.pack.add({
   { src = "https://github.com/navarasu/onedark.nvim" },
   { src = "https://github.com/akinsho/toggleterm.nvim" },
-  { src = "https://github.com/saghen/blink.cmp" },
+  { src = "https://github.com/saghen/blink.cmp", version="v1.7.0" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/MunifTanjim/nui.nvim" },
@@ -13,8 +13,9 @@ vim.pack.add({
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/folke/which-key.nvim" },
   { src = "https://github.com/rcarriga/nvim-notify" },
-
+  { src = "https://github.com/nvim-lualine/lualine.nvim" },
 })
+
 require("config.notify")
 require("config.oil")
 require("config.noice")
@@ -23,3 +24,4 @@ require("config.onedark")
 require("config.telescope")
 require("config.blink")
 require("config.toggleterm")
+require("config.lua-line")
