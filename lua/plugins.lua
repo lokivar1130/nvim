@@ -14,13 +14,15 @@ vim.pack.add({
   { src = "https://github.com/folke/which-key.nvim" },
   { src = "https://github.com/rcarriga/nvim-notify" },
   { src = "https://github.com/nvim-lualine/lualine.nvim" },
+  { src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
 })
 
 require("config.notify")
 require("config.oil")
 require("config.noice")
 require("config.mason")
-require("config.onedark")
+-- require("config.onedark")
+require("config.oxocarbon")
 require("config.telescope")
 require("config.blink")
 require("config.toggleterm")

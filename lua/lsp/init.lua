@@ -2,8 +2,9 @@ require("lsp.lua-ls")
 require("lsp.marksman")
 require("lsp.rust")
 require("lsp.solidity")
+require("lsp.ts")
 
-vim.lsp.enable({ "marksman","lua_ls", "solidity_ls", "rust_analyzer" })
+vim.lsp.enable({ "ts_ls", "marksman", "lua_ls", "solidity_ls", "rust_analyzer" })
 
 vim.diagnostic.config({
 

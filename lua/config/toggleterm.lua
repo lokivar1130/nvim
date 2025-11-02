@@ -13,6 +13,6 @@ require("toggleterm").setup({
     border = "rounded",     -- rounded border
     width = 160,
     height = 40,
-    winblend = 10,
+    winblend = 0,
   },
 })
