@@ -8,7 +8,7 @@ end, { expr = true, noremap = true })
 
 vim.keymap.set("n", "<leader>nh", function()
   vim.cmd("nohlsearch")
-end)
+end, { desc = "Clear all search hilights" })
 
 vim.keymap.set("n", "<leader>cn", function()
   require("notify").dismiss({ silent = true, pending = true })

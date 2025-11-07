@@ -22,7 +22,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = ev.buf, noremap = true, silent = true }
     local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
     --[[
-
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
       vim.opt.completeopt = { 'menu', 'menuone', 'noinsert', 'fuzzy', 'popup' }
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
@@ -45,9 +44,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- 📍 Go to definition
     vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition,
       vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-
-    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references,
-      vim.tbl_extend("force", opts, { desc = "Find references" }))
 
     -- 📝 Rename symbol
     vim.keymap.set("n", "<leader>ln", vim.lsp.buf.rename,
